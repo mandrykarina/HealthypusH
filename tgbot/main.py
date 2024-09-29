@@ -26,7 +26,7 @@ def startBot(message):
 def response(function_call):
   if function_call.message:
      if function_call.data == "Start_mess_yes":
-        message_out = "Отлично! Но я смогу тебе помочь, только если буду знать о тебе кое-что.\n Для начала, сколько тебе целых лет?"
+        message_out = "Отлично! Но я смогу тебе помочь, только если буду знать о тебе кое-что.\nДля начала, сколько тебе целых лет?"
         HealthyPushbot.send_message(function_call.message.chat.id, message_out)
         HealthyPushbot.answer_callback_query(function_call.id)
 @HealthyPushbot.message_handler(content_types=['text'])
@@ -50,7 +50,10 @@ def answer_message(message):
         connection.commit()
         message_out = "Записал. Теперь мне нужно узнать твой пол."
     elif gender == -1:
-        cursor.execute("UPDATE info SET gender = ? WHERE id = ?", (int(message.text),id_,))
+        if ('м' in message.text) or ('М' in message.text):
+            cursor.execute("UPDATE info SET gender = ? WHERE id = ?", (0,id_,))
+        else:
+            cursor.execute("UPDATE info SET gender = ? WHERE id = ?", (1,id_,))
         connection.commit()
         message_out = "И последний вопрос. Какой у тебя образ жизни?"
     elif lifestyle == '0':
