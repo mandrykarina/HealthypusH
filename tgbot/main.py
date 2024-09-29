@@ -15,6 +15,8 @@ cursor.execute('CREATE TABLE info(id INTEGER,age INTEGER,height INTEGER,weight I
 
 @HealthyPushbot.message_handler(commands=['start'])
 def startBot(message):
+    id_ = message.from_user.id
+    cursor.execute("DELETE FROM info WHERE id = ?", (id_,))
     message_out = f"<b>{message.from_user.first_name} {message.from_user.last_name}</b>, привет!\nЯ бот здорового питания HealthyPush. Готов начать путешествие в мир ЗОЖ?"
     markup = types.InlineKeyboardMarkup()
     markup.add(types.InlineKeyboardButton(text = 'Да', callback_data='Start_mess_yes'))
