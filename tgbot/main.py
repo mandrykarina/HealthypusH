@@ -57,7 +57,7 @@ def answer_message(message):
         connection.commit()
         message_out = "И последний вопрос. Какой у тебя образ жизни?"
     elif lifestyle == '0':
-        cursor.execute("UPDATE info SET gender = ? WHERE id = ?", (message.text,id_,))
+        cursor.execute("UPDATE info SET lifestyle = ? WHERE id = ?", (message.text,id_,))
         connection.commit()
         str_ = cursor.execute("SELECT age,height,weight,gender,lifestyle FROM info WHERE id = ?", (id_,)).fetchall()
         message_out = "Ура. Теперь мне известно все, что было необходимо.\nЧерех некоторое время у меня появится функционал и я тебе подскажу, как правильно питаться.\nПока!\n Записанные мною данные по твоему id:" + str(str_)
